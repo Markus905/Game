@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
@@ -91,6 +92,8 @@ public class SimpleSprite implements DisplayableSprite {
 		double velocityY = 0;
 		
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
+		
+		
 
 		//LEFT	
 		if (keyboard.keyDown(37)) {
@@ -110,10 +113,18 @@ public class SimpleSprite implements DisplayableSprite {
 		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
-        this.centerX += deltaX;
-		
 		double deltaY = actual_delta_time * 0.001 * velocityY;
-    	this.centerY += deltaY;
+		
+		
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
+    	
+		if(!collidingBarrierY) {
+			this.centerY += deltaY;
+		}
+		if(!collidingBarrierX) {
+			this.centerX += deltaX;
+		}
 
 	}
 
@@ -121,6 +132,24 @@ public class SimpleSprite implements DisplayableSprite {
 	@Override
 	public void setDispose(boolean dispose) {
 		this.dispose = true;
+	}
+	
+	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+
+		boolean colliding = false;
+
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof BarrierSprite) {
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
+						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+						sprite.getMinX(),sprite.getMinY(), 
+						sprite.getMaxX(), sprite.getMaxY())) {
+					colliding = true;
+					break;					
+				}
+			}
+		}
+		return colliding;
 	}
 
 }

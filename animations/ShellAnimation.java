@@ -1,7 +1,7 @@
 
 public class ShellAnimation implements Animation {
 
-	private Universe current = new ShellUniverse();
+	private Universe current = new tankmaplayout();
 	private boolean universeSwitched = false;
 	private boolean animationComplete = false;
 	
