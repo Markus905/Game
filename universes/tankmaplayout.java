@@ -20,6 +20,7 @@ public class tankmaplayout implements Universe {
 	public tankmaplayout() {
 		background = new tankmap();
 		backgrounds = new ArrayList<Background>();
+		backgrounds.add(new GameBackground());
 		backgrounds.add(background);
 
 		ArrayList<DisplayableSprite> barriers = ((tankmap) background).getBarriers();
