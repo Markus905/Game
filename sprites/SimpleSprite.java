@@ -26,7 +26,7 @@ public class SimpleSprite implements DisplayableSprite {
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;	
 	
-	private double ACCELERATION = 400;    
+	private double ACCELERATION = 10000;    
 	private final double VELOCITY = 2000;
 	private double ROTATION_SPEED = 150;	//degrees per second	
 	private int currentAngle = 0;
