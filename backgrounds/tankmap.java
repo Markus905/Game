@@ -30,7 +30,7 @@ public class tankmap implements Background {
 
 	public tankmap() {
 		try {
-			this.wall = ImageIO.read(new File("res/Stone.jpg"));
+			this.wall = ImageIO.read(new File("res/Barrier.png"));
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}

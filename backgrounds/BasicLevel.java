@@ -27,7 +27,7 @@ public class BasicLevel implements Background {
 
 	public BasicLevel() {
 		try {
-			this.wall = ImageIO.read(new File("res/Stone.jpg"));
+			this.wall = ImageIO.read(new File("res/Barrier.png"));
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}
