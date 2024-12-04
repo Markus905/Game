@@ -12,15 +12,24 @@ public class SimpleSprite implements DisplayableSprite {
 	private static Image image;	
 	private double centerX = 0;
 	private double centerY = 0;
-	private double width = 50;
-	private double height = 50;
+	private double width = 64;
+	private double height = 64;
 	private boolean dispose = false;	
 	private Image rotatedImage;
 	
+	
+	private int currentFrame = 0;
+	private long elapsedTime = 0;
+	private final static int FRAMES = 5;
+	private double framesPerSecond = 3;
+	private double milliSecondsPerFrame = 1000 / framesPerSecond;
+	private static Image[] frames = new Image[FRAMES];
+	private static boolean framesLoaded = false;	
+	
 	private double ACCELERATION = 400;    
-	private final double VELOCITY = 200;
+	private final double VELOCITY = 2000;
 	private double ROTATION_SPEED = 150;	//degrees per second	
-	private double currentAngle = 0;
+	private int currentAngle = 0;
 	private int currentImageAngle = 0;
 
 	public SimpleSprite(double centerX, double centerY, double height, double width) {
@@ -29,30 +38,66 @@ public class SimpleSprite implements DisplayableSprite {
 		this.height = height;
 		this.width = width;
 	}
-
 	
-	public SimpleSprite(double centerX, double centerY) {
+	public SimpleSprite(double centerX, double centerY, double framesPerSecond) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
-		Image image = null;
-		try {
-			image = ImageIO.read(new File("res/simple-sprite.png"));
-		}
-		catch (IOException e) {
-			System.out.print(e.toString());
-		}
+		
 
-		if (image != null) {
-			for (int i = 0; i < 360; i++) {
-				rotatedImages[i] = ImageRotator.rotate(image, i);			
+		this.framesPerSecond = framesPerSecond;
+		this.milliSecondsPerFrame = 1000 / framesPerSecond;
+		long startTime = System.currentTimeMillis();
+		
+		/*
+		 * Loading of the images into an array. The image files are named in sequence by the online tool that split
+		 * the animated GIF, and String formatting is used to re-create the correct file name. Note the use of
+		 * a static array to store the images... this ensures that only a single copy of each rotated image is
+		 * stored, even if there are multiple instances of this sprite.
+		 */
+		if (framesLoaded == false) {
+			for (int frame = 0; frame < FRAMES; frame++) {
+				String filename = "res/ufo_green/sprite_" + String.format("%01d", frame) + ".png";
+				try {
+					frames[frame] = ImageIO.read(new File(filename));
+				}
+				catch (IOException e) {
+					System.err.println(e.toString());
+					
+				}		
 			}
+			
+			if (frames[0] != null) {
+				framesLoaded = true;
+			}
+			
+			System.out.println(frames.toString());
+//			System.exit(0);
+
 		}		
+	}
+	
+	public SimpleSprite(double centerX, double centerY) {
+		this(centerX, centerY, 3);
+		
+//		Image image = null;
+//		try {
+//			image = ImageIO.read(new File("res/ufo_green/sprite_0.png"));
+//		}
+//		catch (IOException e) {
+//			System.out.print(e.toString());
+//		}
+//
+//		if (image != null) {
+//			for (int i = 0; i < 360; i++) {
+//				rotatedImages[i] = ImageRotator.rotate(image, i);			
+//			}
+//		}		
 	}
 
 	public Image getImage() {
-		return rotatedImages[(int)currentAngle];
+		return ImageRotator.rotate(frames[currentFrame], currentAngle);
 	}
 	
 	
@@ -148,6 +193,9 @@ public class SimpleSprite implements DisplayableSprite {
 		if(!collidingBarrierX) {
 			this.centerX += deltaX;
 		}
+		elapsedTime += actual_delta_time;
+		long elapsedFrames = (long) (elapsedTime / milliSecondsPerFrame);
+		currentFrame = (int) (elapsedFrames % FRAMES);
 
 	}
 
