@@ -26,7 +26,7 @@ public class tankmaplayout implements Universe {
 		ArrayList<DisplayableSprite> barriers = ((tankmap) background).getBarriers();
 		
 
-		player = new green_tank_sprite(300,250);
+		player = new GreenUfo(300,250);
 		
 		sprites.add(player);
 
