@@ -35,15 +35,15 @@ public class tankmaplayout implements Universe {
 	}
 
 	public double getScale() {
-		return 0.47;
+		return 0.81;
 	}
 
 	public double getXCenter() {
-		return player.getCenterX();
+		return 750;
 	}
 
 	public double getYCenter() {
-		return player.getCenterY();
+		return 550;
 	}
 
 	public void setXCenter(double xCenter) {
