@@ -27,7 +27,7 @@ public class SimpleSprite implements DisplayableSprite {
 	private static boolean framesLoaded = false;	
 	
 	private double ACCELERATION = 10000;    
-	private final double VELOCITY = 2000;
+	private final double VELOCITY = 40000;
 	private double ROTATION_SPEED = 150;	//degrees per second	
 	private int currentAngle = 0;
 	private int currentImageAngle = 0;
@@ -169,7 +169,9 @@ public class SimpleSprite implements DisplayableSprite {
 		}
 		// DOWN
 		if (keyboard.keyDown(40)) {
-			velocityY += VELOCITY;			
+			double angleInRadians = Math.toRadians(currentAngle);
+			velocityX -= Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityY -= Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
 		}
 		if (currentAngle >= 360) {
 	    	currentAngle -= 360;
