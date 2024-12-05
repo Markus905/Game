@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class SimpleSprite implements DisplayableSprite {
+public class green_tank_sprite implements DisplayableSprite {
 	
 	
 	private static Image[] rotatedImages = new Image[360];
@@ -32,14 +32,14 @@ public class SimpleSprite implements DisplayableSprite {
 	private int currentAngle = 0;
 	private int currentImageAngle = 0;
 
-	public SimpleSprite(double centerX, double centerY, double height, double width) {
+	public green_tank_sprite(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
 		
 		this.height = height;
 		this.width = width;
 	}
 	
-	public SimpleSprite(double centerX, double centerY, double framesPerSecond) {
+	public green_tank_sprite(double centerX, double centerY, double framesPerSecond) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -78,7 +78,7 @@ public class SimpleSprite implements DisplayableSprite {
 		}		
 	}
 	
-	public SimpleSprite(double centerX, double centerY) {
+	public green_tank_sprite(double centerX, double centerY) {
 		this(centerX, centerY, 3);
 		
 //		Image image = null;
