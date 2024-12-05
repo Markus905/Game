@@ -213,8 +213,8 @@ public class SimpleSprite implements DisplayableSprite {
 
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof BarrierSprite) {
-				if (CollisionDetection.overlaps(this.getMinX() + deltaX, this.getMinY() + deltaY, 
-						this.getMaxX()  + deltaX, this.getMaxY() + deltaY, 
+				if (CollisionDetection.overlaps(this.getMinX() + deltaX + 8, this.getMinY() + deltaY + 8, 
+						this.getMaxX()  + deltaX - 8, this.getMaxY() + deltaY - 6, 
 						sprite.getMinX(),sprite.getMinY(), 
 						sprite.getMaxX(), sprite.getMaxY())) {
 					colliding = true;
