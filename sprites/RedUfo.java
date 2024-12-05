@@ -58,7 +58,7 @@ public class RedUfo implements DisplayableSprite {
 		 */
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = "res/ufo_green/sprite_" + String.format("%01d", frame) + ".png";
+				String filename = "res/ufo_red/RedUfo_" + String.format("%01d", frame) + ".png";
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
 				}
