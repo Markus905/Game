@@ -10,6 +10,7 @@ public class tankmaplayout implements Universe {
 	
 	private DisplayableSprite player;
 	private DisplayableSprite player2;
+	private DisplayableSprite player3;
 	
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	
@@ -27,10 +28,12 @@ public class tankmaplayout implements Universe {
 		
 
 		player = new GreenUfo(300,250);
-		player2 = new RedUfo (400,250);
+		player2 = new RedUfo(400,250);
+		player3 = new PurpleUfo(450,250);
 		
 		sprites.add(player);
 		sprites.add(player2);
+		sprites.add(player3);
 		sprites.addAll(barriers);
 	
 	}
