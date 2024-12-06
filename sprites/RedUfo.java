@@ -16,6 +16,9 @@ public class RedUfo implements DisplayableSprite {
 	private double height = 64;
 	private boolean dispose = false;	
 	private Image rotatedImage;
+	private double reloadTime = 0;
+	private double velocityX = 0;
+	private double velocityY = 0;
 	
 	
 	private int currentFrame = 0;
@@ -182,7 +185,11 @@ public class RedUfo implements DisplayableSprite {
 	    }	
 	    
 	    currentAngle %= 360;
-
+	    reloadTime -= actual_delta_time;
+	    
+	    if (keyboard.keyDown(80)) {
+			shoot(universe);	
+	    }
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		double deltaY = actual_delta_time * 0.001 * velocityY;
 		
@@ -215,8 +222,7 @@ public class RedUfo implements DisplayableSprite {
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof BarrierSprite) {
 				if (CollisionDetection.overlaps(this.getMinX() + deltaX + 8, this.getMinY() + deltaY + 8, 
-						this.getMaxX()  + deltaX - 8, this.getMaxY() + deltaY - 6, 
-						sprite.getMinX(),sprite.getMinY(), 
+						this.getMaxX()  + deltaX - 8, this.getMaxY() + deltaY - 6, sprite.getMinX(),sprite.getMinY(), 
 						sprite.getMaxX(), sprite.getMaxY())) {
 					colliding = true;
 					break;					
@@ -225,5 +231,27 @@ public class RedUfo implements DisplayableSprite {
 		}
 		return colliding;
 	}
+		public void shoot(Universe universe) {
+
+			if (reloadTime <= 0) {
+				double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
+				double bulletVelocity = 750; // + currentVelocity;
+				double ratio = (bulletVelocity / currentVelocity);
+//			 = ratio * velocityX + velocityX;
+//			double bulletVelocityY = ratio * velocityY + velocityY;
+				double angleInRadians = Math.toRadians(currentAngle);
+				double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
+				double bulletVelocityY = Math.sin(angleInRadians) * bulletVelocity + velocityY;
+
+				double bulletCurrentX = this.getCenterX();
+				double bulletCurrentY = this.getCenterY();
+
+				bullet_sprite_red bullet = new bullet_sprite_red(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY);
+				universe.getSprites().add(bullet);
+				reloadTime = 100;
+
+			}
+		}
+
 
 }

@@ -168,7 +168,7 @@ public class GreenUfo implements DisplayableSprite {
 			velocityX -= Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
 			velocityY -= Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
 		}
-		if (keyboard.keyDown(32)) {
+		if (keyboard.keyDown(16)) {
 			shoot(universe);	
 		}
 		if (currentAngle >= 360) {
