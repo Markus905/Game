@@ -11,7 +11,10 @@ public class bullet_sprite implements DisplayableSprite {
 	private final int WIDTH = 20;
 	private final int HEIGHT = 20;
 	
-	
+	private CollisionDetection collisionDetection;
+	private VirtualSprite virtual = new VirtualSprite();
+	ArrayList<Class> collisionTargetTypes = new ArrayList<Class>();
+
 	private double accelerationX = 0;          			//PIXELS PER SECOND PER SECOND 
 	private double accelerationY = 0;          			//PIXELS PER SECOND PER SECOND 
 	private long lifeTime = 1000;
@@ -31,7 +34,12 @@ public class bullet_sprite implements DisplayableSprite {
 		this.centerY = centerY;
 		this.width = WIDTH;
 		this.height = HEIGHT;
-
+		collisionDetection = new CollisionDetection();
+		collisionTargetTypes.add(BarrierSprite.class);
+		
+		collisionDetection.setCollisionTargetTypes(collisionTargetTypes);
+		collisionDetection.setBounceFactorX(1);
+		collisionDetection.setBounceFactorY(1);
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
 		
@@ -107,7 +115,17 @@ public class bullet_sprite implements DisplayableSprite {
 	    lifeTime -= actual_delta_time;
 	    if (lifeTime < 0) {
 	    	this.dispose = true;
-	    }	    			
+	    }	
+	    collisionDetection.calculate2DBounce(virtual, this, universe.getSprites(), velocityX, velocityY, actual_delta_time);
+		this.centerX = virtual.getCenterX();
+		this.centerY = virtual.getCenterY();
+		this.velocityX = virtual.getVelocityX();
+		this.velocityY = virtual.getVelocityY();			
+
+		this.velocityX = this.velocityX + accelerationX * 0.001 * actual_delta_time;
+		this.velocityY = this.velocityY + accelerationY * 0.001 * actual_delta_time;
 	
-	}	
+	}
+	
+		
 }
