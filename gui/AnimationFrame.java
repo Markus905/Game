@@ -354,9 +354,9 @@ public class AnimationFrame extends JFrame {
 //		if (keyboard.keyDown(KeyboardInput.KEY_P) && ! isPaused) {
 //			btnPauseRun_mouseClicked(null);	
 //		}
-		if (keyboard.keyDown(KeyboardInput.KEY_O) && isPaused ) {
-			btnPauseRun_mouseClicked(null);
-		}
+//		if (keyboard.keyDown(KeyboardInput.KEY_O) && isPaused ) {
+//			btnPauseRun_mouseClicked(null);
+//		}
 		if (keyboard.keyDown(KeyboardInput.KEY_F1)) {
 			scale *= 1.01;
 			contentPane_mouseMoved(null);
