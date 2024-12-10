@@ -351,9 +351,9 @@ public class AnimationFrame extends JFrame {
 
 	private void handleKeyboardInput() {
 		
-		if (keyboard.keyDown(KeyboardInput.KEY_P) && ! isPaused) {
-			btnPauseRun_mouseClicked(null);	
-		}
+//		if (keyboard.keyDown(KeyboardInput.KEY_P) && ! isPaused) {
+//			btnPauseRun_mouseClicked(null);	
+//		}
 		if (keyboard.keyDown(KeyboardInput.KEY_O) && isPaused ) {
 			btnPauseRun_mouseClicked(null);
 		}
@@ -366,24 +366,24 @@ public class AnimationFrame extends JFrame {
 			contentPane_mouseMoved(null);
 		}
 		
-		if (keyboard.keyDown(KeyboardInput.KEY_A)) {
-			screenOffsetX += 1;
-		}
-		if (keyboard.keyDown(KeyboardInput.KEY_D)) {
-			screenOffsetX -= 1;
-		}
-		if (keyboard.keyDown(KeyboardInput.KEY_S)) {
-			screenOffsetY += 1;
-		}
-		if (keyboard.keyDown(KeyboardInput.KEY_X)) {
-			screenOffsetY -= 1;
-		}
-		if (keyboard.keyDownOnce(KeyboardInput.KEY_G)) {
-			this.SHOW_GRID = !this.SHOW_GRID;
-		}
-		if (keyboard.keyDownOnce(KeyboardInput.KEY_T)) {
-			this.DISPLAY_TIMING = !this.DISPLAY_TIMING;
-		}
+//		if (keyboard.keyDown(KeyboardInput.KEY_A)) {
+//			screenOffsetX += 1;
+//		}
+//		if (keyboard.keyDown(KeyboardInput.KEY_D)) {
+//			screenOffsetX -= 1;
+//		}
+///		if (keyboard.keyDown(KeyboardInput.KEY_S)) {
+//			screenOffsetY += 1;
+//		}
+//		if (keyboard.keyDown(KeyboardInput.KEY_X)) {
+//			screenOffsetY -= 1;
+//		}
+//		if (keyboard.keyDownOnce(KeyboardInput.KEY_G)) {
+//			this.SHOW_GRID = !this.SHOW_GRID;
+//		}
+//		if (keyboard.keyDownOnce(KeyboardInput.KEY_T)) {
+//			this.DISPLAY_TIMING = !this.DISPLAY_TIMING;
+//		}
 	}
 
 	/*

@@ -179,8 +179,8 @@ public class RedUfo implements DisplayableSprite {
 		currentAngle %= 360;
 		reloadTime -= actual_delta_time;
 
-		// SHOOT (o)
-		if (keyboard.keyDown(79)) {
+		// SHOOT (P)
+		if (keyboard.keyDown(80)) {
 			shoot(universe);
 		}
 		double deltaX = actual_delta_time * 0.001 * velocityX;
