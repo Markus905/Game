@@ -236,7 +236,7 @@ public class GreenUfo implements DisplayableSprite {
 			double bulletCurrentX = this.getCenterX();
 			double bulletCurrentY = this.getCenterY();
 
-			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY);
+			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/GreenLaser.png");
 			universe.getSprites().add(bullet);
 			reloadTime = 100;
 

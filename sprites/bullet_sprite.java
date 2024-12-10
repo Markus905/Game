@@ -8,15 +8,15 @@ import javax.imageio.ImageIO;
 
 public class bullet_sprite implements DisplayableSprite {
 
-	private static final int WIDTH = 20;
-	private static final int HEIGHT = 20;
-	private AudioPlayer bulletSound = null;
+	private final int WIDTH = 20;
+	private final int HEIGHT = 20;
+	
 	
 	private double accelerationX = 0;          			//PIXELS PER SECOND PER SECOND 
 	private double accelerationY = 0;          			//PIXELS PER SECOND PER SECOND 
 	private long lifeTime = 1000;
 	
-	private static Image image;	
+	private Image image;	
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 50;
@@ -25,12 +25,11 @@ public class bullet_sprite implements DisplayableSprite {
 	private double velocityX = 0;
 	private double velocityY = 0;
 	
-	public bullet_sprite(double centerX, double centerY, double velocityX, double velocityY) {
+	public bullet_sprite(double centerX, double centerY, double velocityX, double velocityY, String filepath) {
 
-		super();
 		this.centerX = centerX;
 		this.centerY = centerY;
-		this.width =  WIDTH;
+		this.width = WIDTH;
 		this.height = HEIGHT;
 
 		this.velocityX = velocityX;
@@ -38,7 +37,7 @@ public class bullet_sprite implements DisplayableSprite {
 		
 		if (image == null) {
 			try {
-				image = ImageIO.read(new File("res/GreenLaser.png"));
+				image = ImageIO.read(new File(filepath));
 			}
 			catch (IOException e) {
 				System.err.println(e.toString());
@@ -99,17 +98,16 @@ public class bullet_sprite implements DisplayableSprite {
 
 
 	public void update(Universe universe, long actual_delta_time) {
-		
 	    double movement_x = (this.velocityX * actual_delta_time * 0.001);
 	    double movement_y = (this.velocityY * actual_delta_time * 0.001);
 	    
 	    this.centerX += movement_x;
 	    this.centerY += movement_y;
 
-	    lifeTime -= actual_delta_time;
-	    if (lifeTime < 0) {
-	    	this.dispose = true;
-	    }	    			
+//	    lifeTime -= actual_delta_time;
+//	    if (lifeTime < 0) {
+//	    	this.dispose = true;
+//	    }	    			
 	
 	}	
 }

@@ -179,7 +179,8 @@ public class RedUfo implements DisplayableSprite {
 		currentAngle %= 360;
 		reloadTime -= actual_delta_time;
 
-		if (keyboard.keyDown(80)) {
+		// SHOOT (o)
+		if (keyboard.keyDown(79)) {
 			shoot(universe);
 		}
 		double deltaX = actual_delta_time * 0.001 * velocityX;
@@ -237,8 +238,7 @@ public class RedUfo implements DisplayableSprite {
 			double bulletCurrentX = this.getCenterX();
 			double bulletCurrentY = this.getCenterY();
 
-			bullet_sprite_red bullet = new bullet_sprite_red(bulletCurrentX, bulletCurrentY, bulletVelocityX,
-					bulletVelocityY);
+			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/RedLaser.png");	
 			universe.getSprites().add(bullet);
 			reloadTime = 100;
 

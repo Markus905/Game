@@ -91,7 +91,7 @@ public class tankmaplayout implements Universe {
   
 
 	public String toString() {
-		return "game game yay !";
+		return "marcus stinks, jack rules";
 	}
 
 
