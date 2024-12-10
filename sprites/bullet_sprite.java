@@ -104,10 +104,10 @@ public class bullet_sprite implements DisplayableSprite {
 	    this.centerX += movement_x;
 	    this.centerY += movement_y;
 
-//	    lifeTime -= actual_delta_time;
-//	    if (lifeTime < 0) {
-//	    	this.dispose = true;
-//	    }	    			
+	    lifeTime -= actual_delta_time;
+	    if (lifeTime < 0) {
+	    	this.dispose = true;
+	    }	    			
 	
 	}	
 }
