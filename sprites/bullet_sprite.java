@@ -8,8 +8,8 @@ import javax.imageio.ImageIO;
 
 public class bullet_sprite implements DisplayableSprite {
 
-	private final int WIDTH = 20;
-	private final int HEIGHT = 20;
+	private final int WIDTH = 10;
+	private final int HEIGHT = 10;
 	
 	private CollisionDetection collisionDetection;
 	private VirtualSprite virtual = new VirtualSprite();
@@ -17,7 +17,7 @@ public class bullet_sprite implements DisplayableSprite {
 
 	private double accelerationX = 0;          			//PIXELS PER SECOND PER SECOND 
 	private double accelerationY = 0;          			//PIXELS PER SECOND PER SECOND 
-	private long lifeTime = 1000;
+	private long lifeTime = 8000;
 	
 	private Image image;	
 	private double centerX = 0;
@@ -40,6 +40,7 @@ public class bullet_sprite implements DisplayableSprite {
 		collisionDetection.setCollisionTargetTypes(collisionTargetTypes);
 		collisionDetection.setBounceFactorX(1);
 		collisionDetection.setBounceFactorY(1);
+		
 		this.velocityX = velocityX;
 		this.velocityY = velocityY;
 		

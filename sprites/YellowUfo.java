@@ -225,7 +225,7 @@ public class YellowUfo implements DisplayableSprite {
 
 		if (reloadTime <= 0) {
 			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
-			double bulletVelocity = 750; // + currentVelocity;
+			double bulletVelocity = 150; // + currentVelocity;
 			double ratio = (bulletVelocity / currentVelocity);
 //			 = ratio * velocityX + velocityX;
 //			double bulletVelocityY = ratio * velocityY + velocityY;
