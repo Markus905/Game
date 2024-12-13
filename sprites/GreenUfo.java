@@ -218,8 +218,17 @@ public class GreenUfo implements DisplayableSprite {
 				}
 			}
 		}
-		return colliding;
+		
+		for (DisplayableSprite sprite : sprites) {
+			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7700)) {
+				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
+					this.dispose = true;		
+				}
+			}
+		}
+	return colliding;	
 	}
+	
 
 	public void shoot(Universe universe) {
 

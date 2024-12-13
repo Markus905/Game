@@ -59,7 +59,9 @@ public class bullet_sprite implements DisplayableSprite {
 	}
 	
 	//DISPLAYABLE
-	
+	public long getLifetime() {
+		return lifeTime;
+	}
 	public boolean getVisible() {
 		return true;
 	}
