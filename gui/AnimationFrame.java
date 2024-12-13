@@ -32,7 +32,7 @@ public class AnimationFrame extends JFrame {
 	protected int screenOffsetX = SCREEN_WIDTH / 2;
 	protected int screenOffsetY = SCREEN_HEIGHT / 2;
 
-	protected boolean SHOW_GRID = true;
+	protected boolean SHOW_GRID = false;
 	protected boolean DISPLAY_TIMING = false;
 	
 	//scale at which to render the universe. When 1, each logical unit represents 1 pixel in both x and y dimension
@@ -135,7 +135,7 @@ public class AnimationFrame extends JFrame {
 			}
 		});
 
-		btnPauseRun.setFont(new Font("Tahoma", Font.BOLD, 12));
+		btnPauseRun.setFont(new Font("Script", Font.BOLD, 12));
 		btnPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
 		btnPauseRun.setFocusable(false);
 		getContentPane().add(btnPauseRun);
