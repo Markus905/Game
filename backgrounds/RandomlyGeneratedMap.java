@@ -118,5 +118,10 @@ public class RandomlyGeneratedMap implements Background {
 		
 		
 	}
+
+	public int[][] getMap() {
+		
+		return this.map;
+	}
 	
 }	

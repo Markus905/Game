@@ -5,7 +5,10 @@ public class MainUniverse implements Universe {
 	private Background background;
 	private ArrayList<Background> backgrounds;
 	
+	
 	private DisplayableSprite player;
+	
+	private SpawnPointGenerator spawnPointGenerator;
 	
 	
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
@@ -20,7 +23,10 @@ public class MainUniverse implements Universe {
 		backgrounds.add(background);
 		ArrayList<DisplayableSprite> barriers = ((RandomlyGeneratedMap) background).getBarriers();
 		
-		player = new GreenUfo(300,250);
+		spawnPointGenerator = new SpawnPointGenerator(((RandomlyGeneratedMap)this.background).getMap(), 100);
+		
+		int[] greenUfoSpawn = spawnPointGenerator.generateSpawnPoint(0 , 0);
+		player = new GreenUfo(greenUfoSpawn[0] + 50, greenUfoSpawn[1] + 50);
 		
 		sprites.add(player);
 		sprites.addAll(barriers);
@@ -67,7 +73,7 @@ public class MainUniverse implements Universe {
 	public boolean centerOnPlayer() {
 		return true;
 	}
- 	public String toString() {
+	public String toString() {
 		return "game game yay !";
 	}
 	public void update(Animation animation, long actual_delta_time) {
