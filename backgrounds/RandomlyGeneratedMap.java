@@ -18,7 +18,7 @@ public class RandomlyGeneratedMap implements Background {
 
 	private Image wall;
 	
-	private MapGenerator mapGenerator = new MapGenerator(ROWS,COLS);
+	private MapGenerator mapGenerator = new MapGenerator();
 	
 	private int map[][];
 
