@@ -2,11 +2,11 @@ import java.util.*;
 
 public class MapGenerator {
     // Define the size of the maze (including borders)
-    private static final int WIDTH = 16;   // Width with border (original WIDTH + 2 for the border)
-    private static final int HEIGHT = 16;  // Height with border (original HEIGHT + 2 for the border)
+    private static final int WIDTH = 16;  
+    private static final int HEIGHT = 16; 
 
-    private int[][] map; // The maze grid
-    private boolean[][] visited; // Tracks the visited cells
+    private int[][] map; 
+    private boolean[][] visited; 
 
     private static final int WALL = 1;
     private static final int PATH = 0;
@@ -14,7 +14,6 @@ public class MapGenerator {
     private static final int[] DX = {-1, 1, 0, 0}; // Directions for row movements (Up, Down, Left, Right)
     private static final int[] DY = {0, 0, -1, 1}; // Directions for column movements (Up, Down, Left, Right)
 
-    // Constructor to initialize the maze
     public MapGenerator() {
         map = new int[HEIGHT][WIDTH];
         visited = new boolean[HEIGHT][WIDTH];

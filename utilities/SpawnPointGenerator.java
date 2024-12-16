@@ -12,7 +12,9 @@ public class SpawnPointGenerator {
 		
 		for(int i = yStartingPoint; i < map.length; i++) {
 			for(int j = xStartingPoint; j < map[i].length; j++) {
+				//finds first empty square in map from starting point
 				if (map[i][j] == 0) {
+					//converts coordinates to units of tiles
 					coordinates[0] = j * tileSize + 50;
 					coordinates[1] = i * tileSize + 50;
 					return coordinates;
