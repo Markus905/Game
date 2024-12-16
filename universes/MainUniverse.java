@@ -26,7 +26,7 @@ public class MainUniverse implements Universe {
 		spawnPointGenerator = new SpawnPointGenerator(((RandomlyGeneratedMap)this.background).getMap(), 100);
 		
 		int[] greenUfoSpawn = spawnPointGenerator.generateSpawnPoint(0 , 0);
-		player = new GreenUfo(greenUfoSpawn[0] + 50, greenUfoSpawn[1] + 50);
+		player = new GreenUfo(greenUfoSpawn[0], greenUfoSpawn[1]);
 		
 		sprites.add(player);
 		sprites.addAll(barriers);
