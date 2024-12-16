@@ -6,7 +6,11 @@ public class MainUniverse implements Universe {
 	private ArrayList<Background> backgrounds;
 	
 	
-	private DisplayableSprite player;
+	private DisplayableSprite greenUfo;
+	private DisplayableSprite purpleUfo;
+	private DisplayableSprite redUfo;
+	private DisplayableSprite yellowUfo;
+	
 	
 	private SpawnPointGenerator spawnPointGenerator;
 	
@@ -26,9 +30,25 @@ public class MainUniverse implements Universe {
 		spawnPointGenerator = new SpawnPointGenerator(((RandomlyGeneratedMap)this.background).getMap(), 100);
 		
 		int[] greenUfoSpawn = spawnPointGenerator.generateSpawnPoint(0 , 0);
-		player = new GreenUfo(greenUfoSpawn[0], greenUfoSpawn[1]);
+		greenUfo = new GreenUfo(greenUfoSpawn[0], greenUfoSpawn[1]);
 		
-		sprites.add(player);
+		int[] purpleUfoSpawn = spawnPointGenerator.generateSpawnPoint(4,0);
+		purpleUfo = new PurpleUfo(purpleUfoSpawn[0], purpleUfoSpawn[0]);
+		
+		int[] redUfoSpawn = spawnPointGenerator.generateSpawnPoint(8,0);
+		redUfo = new RedUfo(redUfoSpawn[0], redUfoSpawn[0]);
+		
+		int[] yellowUfoSpawn = spawnPointGenerator.generateSpawnPoint(12,0);
+		yellowUfo = new YellowUfo(yellowUfoSpawn[0], yellowUfoSpawn[0]);
+		
+		
+		
+		
+		
+		sprites.add(greenUfo);
+		sprites.add(purpleUfo);
+		sprites.add(redUfo);
+		sprites.add(yellowUfo);
 		sprites.addAll(barriers);
 	
 	}
