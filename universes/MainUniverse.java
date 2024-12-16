@@ -10,7 +10,7 @@ public class MainUniverse implements Universe {
 	
 	private SpawnPointGenerator spawnPointGenerator;
 	
-	
+	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	
 	private double xCenter;
@@ -75,6 +75,23 @@ public class MainUniverse implements Universe {
 	}
 	public String toString() {
 		return "game game yay !";
+		
+	}
+	protected void disposeSprites() {
+
+		for (int i = 0; i < sprites.size(); i++) {
+			DisplayableSprite sprite = sprites.get(i);
+			if (sprite.getDispose() == true) {
+				disposedSprites.add(sprite);
+			}
+		}
+		for (int i = 0; i < disposedSprites.size(); i++) {
+			DisplayableSprite sprite = disposedSprites.get(i);
+			sprites.remove(sprite);
+		}
+		if (disposedSprites.size() > 0) {
+			disposedSprites.clear();
+		}
 	}
 	public void update(Animation animation, long actual_delta_time) {
 		
@@ -82,6 +99,7 @@ public class MainUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, actual_delta_time);
 		}
+		disposeSprites();
 		
 	}
 }
