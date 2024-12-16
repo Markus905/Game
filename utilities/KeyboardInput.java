@@ -21,7 +21,9 @@ import java.awt.event.KeyListener;
 import java.util.Arrays;
 
 public class KeyboardInput implements KeyListener {
-	
+
+
+
 	public static final int KEY_BACKSPACE = 8;
 	public static final int KEY_TAB = 9;
 	public static final int KEY_ENTER = 13;
@@ -121,11 +123,13 @@ public class KeyboardInput implements KeyListener {
 	public static final int KEY_CLOSE_BRAKET = 221;
 	public static final int KEY_SINGLE_QUOTE = 222;
 	
+	private static final int[] RELEVANT_KEYS = { KEY_W, KEY_A, KEY_S, KEY_D, KEY_CAPS_LOCK, KEY_SHIFT, KEY_UP_ARROW,
+			KEY_DOWN_ARROW, KEY_LEFT_ARROW, KEY_RIGHT_ARROW, KEY_I, KEY_J, KEY_K, KEY_P, KEY_L, KEY_NUMPAD_0, KEY_NUMPAD_1, KEY_NUMPAD_5, KEY_NUMPAD_2, KEY_NUMPAD_3,};
 
 	private enum KeyState {
 		RELEASED, // Not down
-		PRESSED,  // Down, but not the first time
-		ONCE      // Down for the first time
+		PRESSED, // Down, but not the first time
+		ONCE // Down for the first time
 	}
 
 	// Current state of the keyboard
@@ -136,21 +140,23 @@ public class KeyboardInput implements KeyListener {
 	private static KeyboardInput instance = null;
 	private static final int KEY_COUNT = 256;
 
-	// a private constructor ensures that the keyboard cannot be instantiated from outside the class.
-	private KeyboardInput() {
+	// a private constructor ensures that the keyboard cannot be instantiated from
+	// outside the class.
+	public KeyboardInput() {
 		reset();
 	}
 
 	public void reset() {
-		currentKeys = new boolean[ KEY_COUNT ];
-		keys = new KeyState[ KEY_COUNT ];
-		for( int i = 0; i < KEY_COUNT; ++i ) {
-			keys[ i ] = KeyState.RELEASED;
+		currentKeys = new boolean[KEY_COUNT];
+		keys = new KeyState[KEY_COUNT];
+		for (int i = 0; i < KEY_COUNT; ++i) {
+			keys[i] = KeyState.RELEASED;
 		}
-		
+
 	}
-	
-	// this method provides any other class access to the one instance of the Keyboard class. If one does not
+
+	// this method provides any other class access to the one instance of the
+	// Keyboard class. If one does not
 	// yet exist, then instantiate one now.
 	public static KeyboardInput getKeyboard() {
 		if (instance == null) {
@@ -158,48 +164,40 @@ public class KeyboardInput implements KeyListener {
 		}
 		return instance;
 	}
-		
+
 	public synchronized void poll() {
-		for( int i = 0; i < KEY_COUNT; ++i ) {
-			// Set the key state 
-			if( currentKeys[ i ] ) {
-				// If the key is down now, but was not
-				// down last frame, set it to ONCE,
-				// otherwise, set it to PRESSED
-				if( keys[ i ] == KeyState.RELEASED )
-					keys[ i ] = KeyState.ONCE;
-				else
-					keys[ i ] = KeyState.PRESSED;
+		for (int keyCode : RELEVANT_KEYS) {
+			if (currentKeys[keyCode]) {
+				keys[keyCode] = (keys[keyCode] == KeyState.RELEASED) ? KeyState.ONCE : KeyState.PRESSED;
 			} else {
-				keys[ i ] = KeyState.RELEASED;
+				keys[keyCode] = KeyState.RELEASED;
 			}
 		}
 	}
 
-	public boolean keyDown( int keyCode ) {
-		return keys[ keyCode ] == KeyState.ONCE ||
-				keys[ keyCode ] == KeyState.PRESSED;
+	public boolean keyDown(int keyCode) {
+		return keys[keyCode] == KeyState.ONCE || keys[keyCode] == KeyState.PRESSED;
 	}
 
-	public boolean keyDownOnce( int keyCode ) {
-		return keys[ keyCode ] == KeyState.ONCE;
+	public boolean keyDownOnce(int keyCode) {
+		return keys[keyCode] == KeyState.ONCE;
 	}
 
-	public synchronized void keyPressed( KeyEvent e ) {
+	public synchronized void keyPressed(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if( keyCode >= 0 && keyCode < KEY_COUNT ) {
-			currentKeys[ keyCode ] = true;
+		if (keyCode >= 0 && keyCode < KEY_COUNT) {
+			currentKeys[keyCode] = true;
 		}
 	}
 
-	public synchronized void keyReleased( KeyEvent e ) {
+	public synchronized void keyReleased(KeyEvent e) {
 		int keyCode = e.getKeyCode();
-		if( keyCode >= 0 && keyCode < KEY_COUNT ) {
-			currentKeys[ keyCode ] = false;
+		if (keyCode >= 0 && keyCode < KEY_COUNT) {
+			currentKeys[keyCode] = false;
 		}
 	}
 
-	public void keyTyped( KeyEvent e ) {
+	public void keyTyped(KeyEvent e) {
 		// Not needed
 	}
 }
