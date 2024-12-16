@@ -33,7 +33,7 @@ public class RandomlyGeneratedMap implements Background {
 		this.map = this.mapGenerator.getMap();
 		
 		try {
-			this.wall = ImageIO.read(new File("res/Barrier.png"));
+			this.wall = ImageIO.read(new File("res/Barrier2.png"));
 		} catch (IOException e) {
 			System.out.println(e.toString());
 		}
