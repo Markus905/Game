@@ -49,4 +49,8 @@ public class ShellAnimation implements Animation {
 		return current;
 	}
 	
+	public int getUniverseCount() {
+		return this.universeCount;
+	}
+	
 }
