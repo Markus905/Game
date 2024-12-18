@@ -6,10 +6,14 @@ public class ShellAnimation implements Animation {
 	
 	public Universe getCurrentUniverse() {
 		if(universeCount == 0) {
-			return new tankmaplayout();
-		} else{
-			return new MainUniverse();
+			this.current = new tankmaplayout();
+		} else if(universeCount == 1){
+			this.current = new MainUniverse();
+		} else {
+			this.current = new EmptyUniverse();
 		}
+		
+		return current;
 		
 		
 	}
@@ -33,14 +37,22 @@ public class ShellAnimation implements Animation {
 	}
 	@Override
 	public void update(AnimationFrame frame, long actual_delta_time) {		
-		if ( KeyboardInput.getKeyboard().keyDownOnce(27)) {
+		if ( KeyboardInput.getKeyboard().keyDownOnce(114)) {
 			if(this.universeCount < 1 && animationComplete == false) {
-				universeCount++;
+				this.universeCount++;
 				this.universeSwitched = true;
-			} else {
-				animationComplete = true;
-			}
-			
+			} else if(this.universeCount > 1 && animationComplete == false) {
+				this.universeCount--;
+				this.universeSwitched = true;
+			}	
+		} else if(KeyboardInput.getKeyboard().keyDownOnce(27)) {
+			this.animationComplete = true;
+		}
+		
+		System.out.println(current);
+		if(universeCount == 1 && current.getKillCount() == 6) {
+			universeCount = 2;
+			this.universeSwitched = true;
 		}
 		
 	}
