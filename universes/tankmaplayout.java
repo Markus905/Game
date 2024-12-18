@@ -1,55 +1,62 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.imageio.ImageIO;
+import javax.swing.JLabel;
+import javax.swing.SwingConstants;
+
 public class tankmaplayout implements Universe {
-
-	private boolean complete = false;
-	private boolean gameOver = false;
-
-	private Background background;
-	private ArrayList<Background> backgrounds;
-
-	private DisplayableSprite player;
-	private DisplayableSprite player2;
-	private DisplayableSprite player3;
-	private DisplayableSprite player4;
 	
-	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
+	
+	
+	private boolean complete = false;
+	private double xCenter = 500;
+	private double yCenter = 500;
+	
+	private Background background = null;
+	private ArrayList<Background> backgrounds = null;
+	
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
+	private DisplayableSprite title = null;
+	private DisplayableSprite instructions = null;
+	private DisplayableSprite frog = null;
+	private DisplayableSprite fish = null;
 
-	private double xCenter;
-	private double yCenter;
+	
 
 	public tankmaplayout() {
-		background = new tankmap();
+	
+		
+		title = new ImageSprite(0, 500, 2000, 2000, "res/Title.jpg");
+	
+		
+		
+	
 		backgrounds = new ArrayList<Background>();
-		backgrounds.add(new GameBackground());
 		backgrounds.add(background);
+		
+	
+		sprites.add(title);
+		
 
-		ArrayList<DisplayableSprite> barriers = ((tankmap) background).getBarriers();
-
-		player = new GreenUfo(300, 250);
-		player2 = new RedUfo(400, 250);
-		player3 = new PurpleUfo(450, 250);
-		player4 = new YellowUfo(450, 200);
-
-		sprites.add(player);
-		sprites.add(player2);
-		sprites.add(player3);
-		sprites.add(player4);
-		sprites.addAll(barriers);
+		
 
 	}
 
 	public double getScale() {
-		return 0.81;
+		return 0.5;
 	}
 
 	public double getXCenter() {
-		return 750;
+		return title.getCenterX();
 	}
-
+	
 	public double getYCenter() {
-		return 550;
+		return yCenter;
 	}
 
 	public void setXCenter(double xCenter) {
@@ -65,59 +72,45 @@ public class tankmaplayout implements Universe {
 	}
 
 	public void setComplete(boolean complete) {
-		complete = true;
+		this.complete = true;
 	}
-
+	
+	
 	public boolean getGameOver() {
-		return gameOver;
+		return false;
 	}
 
-	@Override
-	public ArrayList<Background> getBackgrounds() {
-		return backgrounds;
-	}
-
-	public DisplayableSprite getPlayer1() {
-		return null;
-	}
 
 	public ArrayList<DisplayableSprite> getSprites() {
 		return sprites;
 	}
 
-	public boolean centerOnPlayer() {
-		return true;
+	public ArrayList<Background> getBackgrounds() {
+		return backgrounds;
 	}
 
-	public String toString() {
-		return "marcus stinks, jack rules";
-	}
+	public void update(KeyboardInput keyboard, long actual_delta_time) {
 
-	protected void disposeSprites() {
-
-		for (int i = 0; i < sprites.size(); i++) {
-			DisplayableSprite sprite = sprites.get(i);
-			if (sprite.getDispose() == true) {
-				disposedSprites.add(sprite);
-			}
+		if (keyboard.keyDownOnce(27)) {
+			complete = true;
 		}
-		for (int i = 0; i < disposedSprites.size(); i++) {
-			DisplayableSprite sprite = disposedSprites.get(i);
-			sprites.remove(sprite);
-		}
-		if (disposedSprites.size() > 0) {
-			disposedSprites.clear();
-		}
-	}
-
-	public void update(Animation animation, long actual_delta_time) {
-
+		
+		
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, actual_delta_time);
 		}
-		disposeSprites();
+		
+	}
+	
+	public String toString() {
+		return "";
+	}
 
+	@Override
+	public void update(Animation animation, long actual_delta_time) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -131,5 +124,6 @@ public class tankmaplayout implements Universe {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 }
