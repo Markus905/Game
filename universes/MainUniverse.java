@@ -20,6 +20,8 @@ public class MainUniverse implements Universe {
 	private double xCenter;
 	private double yCenter;
 	
+	private int killCount = 0;
+	
 	public MainUniverse() {
 		background = new RandomlyGeneratedMap();
 		backgrounds = new ArrayList<Background>();
@@ -40,10 +42,6 @@ public class MainUniverse implements Universe {
 		
 		int[] yellowUfoSpawn = spawnPointGenerator.generateSpawnPoint(12,0);
 		yellowUfo = new YellowUfo(yellowUfoSpawn[0], yellowUfoSpawn[0]);
-		
-		
-		
-		
 		
 		sprites.add(greenUfo);
 		sprites.add(purpleUfo);
@@ -118,8 +116,18 @@ public class MainUniverse implements Universe {
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, actual_delta_time);
+			System.out.println(this.killCount);
 		}
 		disposeSprites();
 		
+		
+	}
+	@Override
+	public void setKillCount() {
+		this.killCount++;
+		
+	}
+	public int getKillCount() {
+		return this.killCount;
 	}
 }

@@ -186,8 +186,8 @@ public class PurpleUfo implements DisplayableSprite {
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		double deltaY = actual_delta_time * 0.001 * velocityY;
 
-		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
-		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY);
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0, universe);
+		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY, universe);
 
 		if (!collidingBarrierY) {
 			this.centerY += deltaY;
@@ -206,7 +206,7 @@ public class PurpleUfo implements DisplayableSprite {
 		this.dispose = true;
 	}
 
-	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+	private boolean checkCollisionWithBarrier(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY, Universe universe) {
 
 		boolean colliding = false;
 
@@ -224,13 +224,14 @@ public class PurpleUfo implements DisplayableSprite {
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7700)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
-					this.dispose = true;		
+					universe.setKillCount();
+					this.dispose = true;	
+					break;
 				}
 			}
 		}
 	return colliding;	
 	}
-	
 
 	public void shoot(Universe universe) {
 

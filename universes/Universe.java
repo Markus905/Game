@@ -21,5 +21,9 @@ public interface Universe {
 	public ArrayList<Background> getBackgrounds();		
 
 	public void update(Animation animation, long actual_delta_time);
+	
+	public void setKillCount();
+	
+	public int getKillCount();
     	
 }
