@@ -1,8 +1,15 @@
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class ShellAnimation implements Animation {
 	private Universe current = new tankmaplayout();
 	private boolean universeSwitched = false;
 	private boolean animationComplete = false;
 	private int universeCount = 0;
+	
+	Timer timer = new Timer();
+    private boolean isTimerActive = false;  // To ensure only one timer is active at a time
+
 	
 	public Universe getCurrentUniverse() {
 		if(universeCount == 0) {
@@ -49,13 +56,25 @@ public class ShellAnimation implements Animation {
 			this.animationComplete = true;
 		}
 		
-		System.out.println(current);
-		if(universeCount == 1 && current.getKillCount() == 6) {
-			universeCount = 2;
-			this.universeSwitched = true;
+		if(universeCount == 1 && current.getKillCount() == 6 && !isTimerActive) {
+			  isTimerActive = true;  // Mark timer as active
+	            startSwitchTimer(); 
 		}
 		
 	}
+	
+	
+
+    private void startSwitchTimer() {
+        timer.schedule(new TimerTask() {
+            public void run() {
+                // Switch universe after 2 seconds
+                universeCount = 2; 
+                universeSwitched = true;
+                isTimerActive = false;  // Reset the timer status after switch
+            }
+        }, 2000);  
+    }
 	public Universe switchUniverse(Object event) {
 		animationComplete = true;
 		return current;
