@@ -51,13 +51,13 @@ public class MainUniverse implements Universe {
 	
 	}
 	public double getScale() {
-		return 0.81;
+		return .65;
 	}
 	public double getXCenter() {
-		return 750;
+		return 800;
 	}
 	public double getYCenter() {
-		return 550;
+		return 800;
 	}
 	public void setXCenter(double xCenter) {
 		this.xCenter = xCenter;
