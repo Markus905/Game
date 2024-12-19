@@ -1,13 +1,6 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Image;
-import java.io.File;
-import java.io.IOException;
+
 import java.util.ArrayList;
 
-import javax.imageio.ImageIO;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
 public class tankmaplayout implements Universe {
 	
@@ -22,23 +15,16 @@ public class tankmaplayout implements Universe {
 	
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private DisplayableSprite title = null;
-	private DisplayableSprite instructions = null;
-	private DisplayableSprite frog = null;
-	private DisplayableSprite fish = null;
+	
 
 	
 
 	public tankmaplayout() {
-	
 		
 		title = new ImageSprite(0, 500, 2000, 2000, "res/Title.jpg");
 	
-		
-		
-	
 		backgrounds = new ArrayList<Background>();
 		backgrounds.add(background);
-		
 	
 		sprites.add(title);
 		
