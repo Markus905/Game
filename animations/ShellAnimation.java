@@ -44,7 +44,7 @@ public class ShellAnimation implements Animation {
 	}
 	@Override
 	public void update(AnimationFrame frame, long actual_delta_time) {		
-		if ( KeyboardInput.getKeyboard().keyDownOnce(114)) {
+		if ( KeyboardInput.getKeyboard().keyDownOnce(16)) {
 			if(this.universeCount < 1 && animationComplete == false) {
 				this.universeCount++;
 				this.universeSwitched = true;
