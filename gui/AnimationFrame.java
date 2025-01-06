@@ -32,8 +32,6 @@ public class AnimationFrame extends JFrame {
 	protected int screenOffsetX = SCREEN_WIDTH / 2;
 	protected int screenOffsetY = SCREEN_HEIGHT / 2;
 
-	protected boolean SHOW_GRID = false;
-	protected boolean DISPLAY_TIMING = false;
 	
 	//scale at which to render the universe. When 1, each logical unit represents 1 pixel in both x and y dimension
 	protected double scale = 1;
@@ -135,26 +133,6 @@ public class AnimationFrame extends JFrame {
 			}
 		});
 
-		btnPauseRun.setFont(new Font("Script", Font.BOLD, 12));
-		btnPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
-		btnPauseRun.setFocusable(false);
-		getContentPane().add(btnPauseRun);
-		getContentPane().setComponentZOrder(btnPauseRun, 0);
-
-		lblTop = new JLabel("Time: ");
-		lblTop.setForeground(Color.WHITE);
-		lblTop.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblTop.setBounds(16, 22, SCREEN_WIDTH - 16, 30);
-		getContentPane().add(lblTop);
-		getContentPane().setComponentZOrder(lblTop, 0);
-
-		lblBottom = new JLabel("Status");
-		lblBottom.setForeground(Color.WHITE);
-		lblBottom.setFont(new Font("Consolas", Font.BOLD, 30));
-		lblBottom.setBounds(16, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH - 16, 36);
-		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(lblBottom);
-		getContentPane().setComponentZOrder(lblBottom, 0);
 
 	}
 
@@ -275,7 +253,6 @@ public class AnimationFrame extends JFrame {
 			// inner game loop which will animate the current universe until stop is signaled or until the universe is complete / switched
 			while (stop == false && animation.isComplete() == false && universe.isComplete() == false && animation.getUniverseSwitched() == false) {
 				
-				if (DISPLAY_TIMING == true) System.out.println(String.format("animation loop: %10s @ %6d", "sleep", System.currentTimeMillis() % 1000000));
 
 				//adapted from http://www.java-gaming.org/index.php?topic=24220.0
 				long target_wake_time = System.currentTimeMillis() + REFRESH_TIME;
@@ -293,7 +270,6 @@ public class AnimationFrame extends JFrame {
 
 				}
 
-				if (DISPLAY_TIMING == true) System.out.println(String.format("animation loop: %10s @ %6d  (+%4d ms)", "wake", System.currentTimeMillis() % 1000000, System.currentTimeMillis() - lastRefreshTime));
 
 				//track time that has elapsed since the last update, and note the refresh time
 				deltaTime = (isPaused ? 0 : System.currentTimeMillis() - lastRefreshTime);
@@ -302,20 +278,16 @@ public class AnimationFrame extends JFrame {
 				
 				//read input
 				keyboard.poll();
-				handleKeyboardInput();
 
 				//update logical
 				animation.update(this, deltaTime);
 				universe.update(animation, deltaTime);
 
-				if (DISPLAY_TIMING == true) System.out.println(String.format("animation loop: %10s @ %6d  (+%4d ms)", "logic", System.currentTimeMillis() % 1000000, System.currentTimeMillis() - lastRefreshTime));
 				
 				//update interface
-				updateControls();
 				this.logicalCenterX = universe.getXCenter();
 				this.logicalCenterY = universe.getYCenter();
-				MouseInput.logicalX = translateToLogicalX(MouseInput.screenX);
-				MouseInput.logicalY = translateToLogicalY(MouseInput.screenY);
+				
 
 				this.repaint();
 
@@ -329,14 +301,7 @@ public class AnimationFrame extends JFrame {
 
 	}
 
-	protected void updateControls() {
-		
-		this.lblTop.setText(String.format("Time: %9.3f;  offsetX: %5d; offsetY: %5d;  scale: %3.3f", total_elapsed_time / 1000.0, screenOffsetX, screenOffsetY, scale));
-		if (universe != null) {
-			this.lblBottom.setText(universe.toString());
-		}
 
-	}
 
 	protected void btnPauseRun_mouseClicked(MouseEvent arg0) {
 		if (isPaused) {
@@ -349,42 +314,7 @@ public class AnimationFrame extends JFrame {
 		}
 	}
 
-	private void handleKeyboardInput() {
-		
-//		if (keyboard.keyDown(KeyboardInput.KEY_P) && ! isPaused) {
-//			btnPauseRun_mouseClicked(null);	
-//		}
-//		if (keyboard.keyDown(KeyboardInput.KEY_O) && isPaused ) {
-//			btnPauseRun_mouseClicked(null);
-//		}
-		if (keyboard.keyDown(KeyboardInput.KEY_F1)) {
-			scale *= 1.01;
-			contentPane_mouseMoved(null);
-		}
-		if (keyboard.keyDown(KeyboardInput.KEY_F2)) {
-			scale /= 1.01;
-			contentPane_mouseMoved(null);
-		}
-		
-//		if (keyboard.keyDown(KeyboardInput.KEY_A)) {
-//			screenOffsetX += 1;
-//		}
-//		if (keyboard.keyDown(KeyboardInput.KEY_D)) {
-//			screenOffsetX -= 1;
-//		}
-///		if (keyboard.keyDown(KeyboardInput.KEY_S)) {
-//			screenOffsetY += 1;
-//		}
-//		if (keyboard.keyDown(KeyboardInput.KEY_X)) {
-//			screenOffsetY -= 1;
-//		}
-//		if (keyboard.keyDownOnce(KeyboardInput.KEY_G)) {
-//			this.SHOW_GRID = !this.SHOW_GRID;
-//		}
-//		if (keyboard.keyDownOnce(KeyboardInput.KEY_T)) {
-//			this.DISPLAY_TIMING = !this.DISPLAY_TIMING;
-//		}
-	}
+
 
 	/*
 	 * This method will run whenever the universe needs to be rendered. The animation loop calls it
@@ -426,28 +356,9 @@ public class AnimationFrame extends JFrame {
 				}				
 			}
 			
-			if (SHOW_GRID) {
-				for (int x = 0; x <= SCREEN_WIDTH; x+=50) {
-					if (x % 100 == 0) {
-						g.setColor(Color.GRAY);						
-					} else {
-						g.setColor(Color.DARK_GRAY);						
-					}					
-					g.drawLine(x, 0, x, SCREEN_HEIGHT);
-				}
-				for (int y = 0; y <= SCREEN_HEIGHT; y+= 50) {
-					if (y % 100 == 0) {
-						g.setColor(Color.GRAY);						
-					} else {
-						g.setColor(Color.DARK_GRAY);						
-					}
-					g.drawLine(0, y, SCREEN_WIDTH, y);
-				}
-			}			
+			
 
 			paintAnimationPanel(g);
-			
-			if (DISPLAY_TIMING == true) System.out.println(String.format("animation loop: %10s @ %6d  (+%4d ms)", "interface", System.currentTimeMillis() % 1000000, System.currentTimeMillis() - lastRefreshTime));
 			
 		}
 		
