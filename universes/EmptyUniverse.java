@@ -16,10 +16,11 @@ public class EmptyUniverse implements Universe {
 	private double yCenter;
 
 	public EmptyUniverse() {
+		 ImageSprite title = new ImageSprite(740, 550, 1300, 1300, "res/gameover.jpg");
 		backgrounds = new ArrayList<Background>();
 		backgrounds.add(new GameBackground());
 		backgrounds.add(background);
-
+		sprites.add(title);
 
 
 
