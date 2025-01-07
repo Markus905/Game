@@ -222,7 +222,7 @@ public class PurpleUfo implements DisplayableSprite {
 		}
 		
 		for (DisplayableSprite sprite : sprites) {
-			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7700)) {
+			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
 					universe.setKillCount();
 					this.dispose = true;	
