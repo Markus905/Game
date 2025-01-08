@@ -290,6 +290,8 @@ public class AnimationFrame extends JFrame {
 				
 
 				this.repaint();
+				
+				animation.backgroundMusic();
 
 			}
 			

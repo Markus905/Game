@@ -17,4 +17,6 @@ public interface Animation {
 	
 	public int getUniverseCount();
 	
+	public void backgroundMusic();
+	
 }

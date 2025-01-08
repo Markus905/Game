@@ -7,6 +7,9 @@ public class ShellAnimation implements Animation {
 	private boolean animationComplete = false;
 	private int universeCount = 0;
 	
+	private AudioPlayer backgroundMusic = new AudioPlayer();
+
+	
 	Timer timer = new Timer();
     private boolean isTimerActive = false;  // To ensure only one timer is active at a time
 
@@ -83,5 +86,15 @@ public class ShellAnimation implements Animation {
 	public int getUniverseCount() {
 		return this.universeCount;
 	}
+
+
+	public void backgroundMusic() {
+		if(backgroundMusic.isPlayCompleted()) {
+			backgroundMusic.playAsynchronous("res/audio/backgroundMusic.wav");
+		}
+		
+	}
+	
+	
 	
 }
