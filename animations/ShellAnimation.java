@@ -76,17 +76,12 @@ public class ShellAnimation implements Animation {
                 universeSwitched = true;
                 isTimerActive = false;  // Reset the timer status after switch
             }
-        }, 2000);  
+        }, 1000);  
     }
 	public Universe switchUniverse(Object event) {
 		animationComplete = true;
 		return current;
 	}
-	
-	public int getUniverseCount() {
-		return this.universeCount;
-	}
-
 
 	public void backgroundMusic() {
 		if(backgroundMusic.isPlayCompleted()) {

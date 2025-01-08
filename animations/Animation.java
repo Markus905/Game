@@ -15,8 +15,5 @@ public interface Animation {
 	
 	public void update(AnimationFrame frame, long actual_delta_time);	
 	
-	public int getUniverseCount();
-	
-	public void backgroundMusic();
 	
 }
