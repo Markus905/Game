@@ -49,13 +49,7 @@ public class RedUfo implements DisplayableSprite {
 		this.milliSecondsPerFrame = 1000 / framesPerSecond;
 		long startTime = System.currentTimeMillis();
 
-		/*
-		 * Loading of the images into an array. The image files are named in sequence by
-		 * the online tool that split the animated GIF, and String formatting is used to
-		 * re-create the correct file name. Note the use of a static array to store the
-		 * images... this ensures that only a single copy of each rotated image is
-		 * stored, even if there are multiple instances of this sprite.
-		 */
+		
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
 				String filename = "res/ufo_red/RedUfo_" + String.format("%01d", frame) + ".png";
@@ -72,7 +66,7 @@ public class RedUfo implements DisplayableSprite {
 			}
 
 			System.out.println(frames.toString());
-//			System.exit(0);
+
 
 		}
 	}
@@ -80,26 +74,14 @@ public class RedUfo implements DisplayableSprite {
 	public RedUfo(double centerX, double centerY) {
 		this(centerX, centerY, 3);
 
-//		Image image = null;
-//		try {
-//			image = ImageIO.read(new File("res/ufo_green/sprite_0.png"));
-//		}
-//		catch (IOException e) {
-//			System.out.print(e.toString());
-//		}
-//
-//		if (image != null) {
-//			for (int i = 0; i < 360; i++) {
-//				rotatedImages[i] = ImageRotator.rotate(image, i);			
-//			}
-//		}		
+		
 	}
 
 	public Image getImage() {
 		return ImageRotator.rotate(frames[currentFrame], currentAngle);
 	}
 
-	// DISPLAYABLE
+	
 
 	public boolean getVisible() {
 		return true;
@@ -220,10 +202,12 @@ public class RedUfo implements DisplayableSprite {
 			}
 		}
 		
+		
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
 					universe.setKillCount();
+					((MainUniverse)universe).setKillTracker(0, 1);//sets state on killTracker as dead
 					this.dispose = true;		
 				}
 			}
@@ -238,8 +222,7 @@ public class RedUfo implements DisplayableSprite {
 			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
 			double bulletVelocity = 150; // + currentVelocity;
 			double ratio = (bulletVelocity / currentVelocity);
-//			 = ratio * velocityX + velocityX;
-//			double bulletVelocityY = ratio * velocityY + velocityY;
+
 			double angleInRadians = Math.toRadians(currentAngle);
 			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
 			double bulletVelocityY = Math.sin(angleInRadians) * bulletVelocity + velocityY;
