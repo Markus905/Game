@@ -42,8 +42,10 @@ public class AnimationFrame extends JFrame {
 	//basic controls on interface... these are protected so that subclasses can access
 	protected JPanel panel = null;
 	protected JButton btnPauseRun;
-	protected JLabel lblTop;
-	protected JLabel lblBottom;
+	protected JLabel redScoreLabel;
+	protected JLabel greenScoreLabel;
+	protected JLabel yellowScoreLabel;
+	protected JLabel purpleScoreLabel;
 
 	protected static boolean stop = false;
 
@@ -125,13 +127,36 @@ public class AnimationFrame extends JFrame {
 		panel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		getContentPane().add(panel, BorderLayout.CENTER);
 
-		btnPauseRun = new JButton("||");
-		btnPauseRun.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent arg0) {
-				btnPauseRun_mouseClicked(arg0);
-			}
-		});
+		redScoreLabel = new JLabel("Red: ");
+		redScoreLabel.setForeground(Color.RED);
+		redScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
+		redScoreLabel.setBounds(16, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		getContentPane().add(redScoreLabel);
+		getContentPane().setComponentZOrder(redScoreLabel, 0);
+		
+		greenScoreLabel = new JLabel("Green: ");
+		greenScoreLabel.setForeground(Color.GREEN);
+		greenScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
+		greenScoreLabel.setBounds(258, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		getContentPane().add(greenScoreLabel);
+		getContentPane().setComponentZOrder(greenScoreLabel, 0);
+		
+		yellowScoreLabel = new JLabel("Yellow: ");
+		yellowScoreLabel.setForeground(Color.YELLOW);
+		yellowScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
+		yellowScoreLabel.setBounds(500, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		getContentPane().add(yellowScoreLabel);
+		getContentPane().setComponentZOrder(yellowScoreLabel, 0);
+		
+		purpleScoreLabel = new JLabel("Purple: ");
+		purpleScoreLabel.setForeground(Color.MAGENTA);
+		purpleScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
+		purpleScoreLabel.setBounds(742, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		getContentPane().add(purpleScoreLabel);
+		getContentPane().setComponentZOrder(purpleScoreLabel, 0);
+		
+		
+		
 
 
 	}

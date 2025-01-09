@@ -17,10 +17,11 @@ public class MainUniverse implements Universe {
 	ArrayList<DisplayableSprite> disposedSprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 
-	private double xCenter;
-	private double yCenter;
+	private double xCenter = 800;
+	private double yCenter = 800;
 	
 	private int[] killTracker = new int[4]; //tracks which one of the ufos is dead [red, yellow, green, purple]
+	//0 == alive, 1 == dead
 
 	public MainUniverse() {
 		Random random = new Random();
@@ -58,11 +59,11 @@ public class MainUniverse implements Universe {
 	}
 
 	public double getXCenter() {
-		return 800;
+		return this.xCenter;
 	}
 
 	public double getYCenter() {
-		return 800;
+		return this.yCenter;
 	}
 
 	public void setXCenter(double xCenter) {
@@ -81,29 +82,18 @@ public class MainUniverse implements Universe {
 		complete = true;
 	}
 
-	public boolean getGameOver() {
-		return gameOver;
-	}
-
 	@Override
 	public ArrayList<Background> getBackgrounds() {
 		return backgrounds;
 	}
 
-	public DisplayableSprite getPlayer1() {
-		return null;
-	}
 
 	public ArrayList<DisplayableSprite> getSprites() {
 		return sprites;
 	}
 
-	public boolean centerOnPlayer() {
-		return true;
-	}
-
 	public String toString() {
-		return "game game yay !";
+		return "";
 
 	}
 
