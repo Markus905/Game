@@ -313,6 +313,8 @@ public class AnimationFrame extends JFrame {
 				this.logicalCenterX = universe.getXCenter();
 				this.logicalCenterY = universe.getYCenter();
 				
+				this.updateScoreText();
+				
 
 				this.repaint();
 				
@@ -516,5 +518,29 @@ public class AnimationFrame extends JFrame {
 	}
 	protected void contentPane_mouseExited(MouseEvent e) {
 		contentPane_mouseMoved(e);
+	}
+	
+	
+	protected void updateScoreText() {
+		if(this.universe instanceof MainUniverse) {
+			int[] winCount = ((ShellAnimation)this.animation).getWinCount();
+			
+			this.redScoreLabel.setVisible(true);
+			this.redScoreLabel.setText("RED: " + winCount[0]);
+			
+			this.greenScoreLabel.setVisible(true);
+			this.greenScoreLabel.setText("GREEN: " + winCount[2]);
+			
+			this.yellowScoreLabel.setVisible(true);
+			this.yellowScoreLabel.setText("YELLOW: " + winCount[1]);
+			
+			this.purpleScoreLabel.setVisible(true);
+			this.purpleScoreLabel.setText("PURPLE: " + winCount[3]);
+		} else {
+			this.redScoreLabel.setVisible(false);
+			this.greenScoreLabel.setVisible(false);
+			this.yellowScoreLabel.setVisible(false);
+			this.purpleScoreLabel.setVisible(false);;
+		}
 	}
 }

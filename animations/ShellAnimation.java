@@ -7,11 +7,7 @@ public class ShellAnimation implements Animation {
 	private boolean animationComplete = false;
 	private int universeCount = 0;
 	
-	private int redWins = 0;
-	private int greenWins = 0;
-	private int yellowWins = 0;
-	private int purpleWins = 0;
-	
+	private int[] winCount = new int[4]; //tracks wins [red, yellow, green, purple]
 	
 	private AudioPlayer backgroundMusic = new AudioPlayer();
 	
@@ -58,13 +54,13 @@ public class ShellAnimation implements Animation {
 				  isTimerActive = true;// Mark timer as active
 				 
 				  if (killTracker[0] == 0) {
-					  redWins++;
+					  this.winCount[0]++;
 				  }else if(killTracker[1] == 0) {
-					  yellowWins++;
+					  this.winCount[1]++;
 				  } else if(killTracker[2] == 0) {
-					  greenWins++;
+					  this.winCount[2]++;
 				  } else {
-					  purpleWins++;
+					  this.winCount[3]++;
 				  }
 				  
 		            startSwitchTimer(); 
@@ -84,7 +80,6 @@ public class ShellAnimation implements Animation {
 			this.animationComplete = true;
 		}
 		
-		System.out.println("red: " + redWins + " green: " + greenWins + " purple: " + purpleWins + " yellow: " + yellowWins);
 
 	}
 	
@@ -126,6 +121,11 @@ public class ShellAnimation implements Animation {
 		}
 		
 	}
+	
+	public int[] getWinCount() {
+		return this.winCount;
+	}
+
 	
 	
 	
