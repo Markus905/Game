@@ -137,14 +137,14 @@ public class AnimationFrame extends JFrame {
 		greenScoreLabel = new JLabel("Green: ");
 		greenScoreLabel.setForeground(Color.GREEN);
 		greenScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
-		greenScoreLabel.setBounds(258, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		greenScoreLabel.setBounds(220, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
 		getContentPane().add(greenScoreLabel);
 		getContentPane().setComponentZOrder(greenScoreLabel, 0);
 		
 		yellowScoreLabel = new JLabel("Yellow: ");
 		yellowScoreLabel.setForeground(Color.YELLOW);
 		yellowScoreLabel.setFont(new Font("Consolas", Font.BOLD, 50));
-		yellowScoreLabel.setBounds(500, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
+		yellowScoreLabel.setBounds(470, SCREEN_HEIGHT - 100, SCREEN_WIDTH - 5, 50);
 		getContentPane().add(yellowScoreLabel);
 		getContentPane().setComponentZOrder(yellowScoreLabel, 0);
 		
@@ -526,16 +526,16 @@ public class AnimationFrame extends JFrame {
 			int[] winCount = ((ShellAnimation)this.animation).getWinCount();
 			
 			this.redScoreLabel.setVisible(true);
-			this.redScoreLabel.setText("RED: " + winCount[0]);
+			this.redScoreLabel.setText("RED:" + winCount[0]);
 			
 			this.greenScoreLabel.setVisible(true);
-			this.greenScoreLabel.setText("GREEN: " + winCount[2]);
+			this.greenScoreLabel.setText("GREEN:" + winCount[2]);
 			
 			this.yellowScoreLabel.setVisible(true);
-			this.yellowScoreLabel.setText("YELLOW: " + winCount[1]);
+			this.yellowScoreLabel.setText("YELLOW:" + winCount[1]);
 			
 			this.purpleScoreLabel.setVisible(true);
-			this.purpleScoreLabel.setText("PURPLE: " + winCount[3]);
+			this.purpleScoreLabel.setText("PURPLE:" + winCount[3]);
 		} else {
 			this.redScoreLabel.setVisible(false);
 			this.greenScoreLabel.setVisible(false);

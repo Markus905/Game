@@ -7,14 +7,11 @@ import javax.imageio.ImageIO;
 
 public class RedUfo implements DisplayableSprite {
 
-	private static Image[] rotatedImages = new Image[360];
-	private static Image image;
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 64;
 	private double height = 64;
 	private boolean dispose = false;
-	private Image rotatedImage;
 	private double reloadTime = 0;
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -27,11 +24,11 @@ public class RedUfo implements DisplayableSprite {
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 
-	private double ACCELERATION = 10000;
-	private final double VELOCITY = 40000;
+	private double VELOCITY = 10000;
 	private double ROTATION_SPEED = 150; // degrees per second
 	private int currentAngle = 0;
-	private int currentImageAngle = 0;
+	
+	private boolean invincible = false;
 
 	public RedUfo(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
@@ -47,12 +44,11 @@ public class RedUfo implements DisplayableSprite {
 
 		this.framesPerSecond = framesPerSecond;
 		this.milliSecondsPerFrame = 1000 / framesPerSecond;
-		long startTime = System.currentTimeMillis();
 
-		
+
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = "res/ufo_red/RedUfo_" + String.format("%01d", frame) + ".png";
+				String filename = "res/ufo_green/sprite_" + String.format("%01d", frame) + ".png";
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
 				} catch (IOException e) {
@@ -67,21 +63,18 @@ public class RedUfo implements DisplayableSprite {
 
 			System.out.println(frames.toString());
 
-
 		}
 	}
 
 	public RedUfo(double centerX, double centerY) {
-		this(centerX, centerY, 3);
-
-		
+		this(centerX, centerY, 3);	
 	}
 
 	public Image getImage() {
 		return ImageRotator.rotate(frames[currentFrame], currentAngle);
 	}
 
-	
+	// DISPLAYABLE
 
 	public boolean getVisible() {
 		return true;
@@ -130,26 +123,28 @@ public class RedUfo implements DisplayableSprite {
 
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
-		// LEFT (j)
-		if (keyboard.keyDown(74)) {
+		// LEFT
+		if (keyboard.keyDown(37)) {
 			currentAngle -= (ROTATION_SPEED * (actual_delta_time * 0.001));
 		}
-		// UP (I)
-		if (keyboard.keyDown(73)) {
+		// UP
+		if (keyboard.keyDown(38)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX += Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
-			velocityY += Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
-
+			velocityX += Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+			velocityY += Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+			// RIGHT
 		}
-		// RIGHT (L)
-		if (keyboard.keyDown(76)) {
+		if (keyboard.keyDown(39)) {
 			currentAngle += (ROTATION_SPEED * (actual_delta_time * 0.001));
 		}
-		// DOWN (K)
-		if (keyboard.keyDown(75)) {
+		// DOWN
+		if (keyboard.keyDown(40)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX -= Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
-			velocityY -= Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityX -= Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+			velocityY -= Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+		}
+		if (keyboard.keyDown(16)) {
+			shoot(universe);
 		}
 		if (currentAngle >= 360) {
 			currentAngle -= 360;
@@ -161,14 +156,15 @@ public class RedUfo implements DisplayableSprite {
 		currentAngle %= 360;
 		reloadTime -= actual_delta_time;
 
-		if (keyboard.keyDown(80)) {
-			shoot(universe);
-		}
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		double deltaY = actual_delta_time * 0.001 * velocityY;
 
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0, universe);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY, universe);
+		
+		if(!invincible) {
+			this.checkCollisionWithBullet(universe.getSprites(), universe);
+		}
 
 		if (!collidingBarrierY) {
 			this.centerY += deltaY;
@@ -202,25 +198,25 @@ public class RedUfo implements DisplayableSprite {
 			}
 		}
 		
-		
+	
+	return colliding;	
+	}
+	
+	private void checkCollisionWithBullet(ArrayList<DisplayableSprite> sprites, Universe universe) {
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
-				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {;
-					((MainUniverse)universe).setKillTracker(0, 1);//sets state on killTracker as dead
+				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
+					((MainUniverse)universe).setKillTracker(2, 1);//sets state on killTracker as dead
 					this.dispose = true;		
 				}
 			}
 		}
-	return colliding;	
 	}
-	
 
 	public void shoot(Universe universe) {
 
 		if (reloadTime <= 0) {
-			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
 			double bulletVelocity = 150; // + currentVelocity;
-			double ratio = (bulletVelocity / currentVelocity);
 
 			double angleInRadians = Math.toRadians(currentAngle);
 			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
@@ -229,7 +225,7 @@ public class RedUfo implements DisplayableSprite {
 			double bulletCurrentX = this.getCenterX();
 			double bulletCurrentY = this.getCenterY();
 
-			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/RedLaser.png");	
+			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/GreenLaser.png");
 			universe.getSprites().add(bullet);
 			reloadTime = 100;
 
