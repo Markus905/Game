@@ -7,13 +7,17 @@ public class ShellAnimation implements Animation {
 	private boolean animationComplete = false;
 	private int universeCount = 0;
 	
+	private int redWins = 0;
+	private int greenWins = 0;
+	private int yellowWins = 0;
+	private int purpleWins = 0;
+	
+	
 	private AudioPlayer backgroundMusic = new AudioPlayer();
-
 	
 	Timer timer = new Timer();
     private boolean isTimerActive = false;  // To ensure only one timer is active at a time
 
-	
 	public Universe getCurrentUniverse() {
 		if(universeCount == 0) {
 			this.current = new tankmaplayout();
@@ -47,6 +51,27 @@ public class ShellAnimation implements Animation {
 	}
 	@Override
 	public void update(AnimationFrame frame, long actual_delta_time) {		
+		
+		if(universeCount == 1) {
+			int[] killTracker = ((MainUniverse)current).getKillTracker();
+			if(checkGameOver(killTracker) && !isTimerActive) {
+				  isTimerActive = true;// Mark timer as active
+				 
+				  if (killTracker[0] == 0) {
+					  redWins++;
+				  }else if(killTracker[1] == 0) {
+					  yellowWins++;
+				  } else if(killTracker[2] == 0) {
+					  greenWins++;
+				  } else {
+					  purpleWins++;
+				  }
+				  
+		            startSwitchTimer(); 
+			}
+		}
+		
+		
 		if ( KeyboardInput.getKeyboard().keyDownOnce(16)) {
 			if(this.universeCount < 1 && animationComplete == false) {
 				this.universeCount++;
@@ -59,11 +84,23 @@ public class ShellAnimation implements Animation {
 			this.animationComplete = true;
 		}
 		
-		if(universeCount == 1 && current.getKillCount() == 6 && !isTimerActive) {
-			  isTimerActive = true;  // Mark timer as active
-	            startSwitchTimer(); 
+		System.out.println("red: " + redWins + " green: " + greenWins + " purple: " + purpleWins + " yellow: " + yellowWins);
+
+	}
+	
+	static boolean checkGameOver(int[] killTracker) {
+		int count = 0;
+		for(int num : killTracker) {
+			if (num == 0) {
+				count++;
+			}
+			if(count > 1) {
+				return false;
+				//checks if more than one player is alive and returns false if true
+				//by doing it this way it makes it so it doesn't have to go through the whole array each time
+			}
 		}
-		
+		return true;
 	}
 	
 	

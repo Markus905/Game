@@ -77,7 +77,7 @@ public class EmptyUniverse implements Universe {
 	}
 
 	public String toString() {
-		return "marcus stinks, jack rules";
+		return "";
 	}
 
 	protected void disposeSprites() {
@@ -105,18 +105,6 @@ public class EmptyUniverse implements Universe {
 		}
 		disposeSprites();
 
-	}
-
-	@Override
-	public void setKillCount() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getKillCount() {
-		// TODO Auto-generated method stub
-		return 0;
 	}
 
 }

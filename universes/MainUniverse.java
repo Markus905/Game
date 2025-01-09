@@ -19,8 +19,6 @@ public class MainUniverse implements Universe {
 
 	private double xCenter;
 	private double yCenter;
-
-	private int killCount = 0;
 	
 	private int[] killTracker = new int[4]; //tracks which one of the ufos is dead [red, yellow, green, purple]
 
@@ -136,17 +134,12 @@ public class MainUniverse implements Universe {
 
 	}
 
-	@Override
-	public void setKillCount() {
-		this.killCount++;
-
-	}
-
-	public int getKillCount() {
-		return this.killCount;
-	}
 	
 	public void setKillTracker(int index, int value) {
 		this.killTracker[index] = value;
+	}
+	
+	public int[] getKillTracker() {
+		return this.killTracker;
 	}
 }

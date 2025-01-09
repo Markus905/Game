@@ -99,17 +99,6 @@ public class tankmaplayout implements Universe {
 		
 	}
 
-	@Override
-	public void setKillCount() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public int getKillCount() {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 
 }
