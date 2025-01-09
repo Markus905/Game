@@ -7,11 +7,14 @@ import javax.imageio.ImageIO;
 
 public class PurpleUfo implements DisplayableSprite {
 
+	private static Image[] rotatedImages = new Image[360];
+	private static Image image;
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 64;
 	private double height = 64;
 	private boolean dispose = false;
+	private Image rotatedImage;
 	private double reloadTime = 0;
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -24,11 +27,11 @@ public class PurpleUfo implements DisplayableSprite {
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 
-	private double VELOCITY = 10000;
+	private double ACCELERATION = 10000;
+	private final double VELOCITY = 40000;
 	private double ROTATION_SPEED = 150; // degrees per second
 	private int currentAngle = 0;
-	
-	private boolean invincible = false;
+	private int currentImageAngle = 0;
 
 	public PurpleUfo(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
@@ -44,11 +47,11 @@ public class PurpleUfo implements DisplayableSprite {
 
 		this.framesPerSecond = framesPerSecond;
 		this.milliSecondsPerFrame = 1000 / framesPerSecond;
-
+		long startTime = System.currentTimeMillis();
 
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = "res/ufo_green/sprite_" + String.format("%01d", frame) + ".png";
+				String filename = "res/ufo_purple/purpleufo_" + String.format("%01d", frame) + ".png";
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
 				} catch (IOException e) {
@@ -67,7 +70,7 @@ public class PurpleUfo implements DisplayableSprite {
 	}
 
 	public PurpleUfo(double centerX, double centerY) {
-		this(centerX, centerY, 3);	
+		this(centerX, centerY, 3);		
 	}
 
 	public Image getImage() {
@@ -123,28 +126,26 @@ public class PurpleUfo implements DisplayableSprite {
 
 		KeyboardInput keyboard = KeyboardInput.getKeyboard();
 
-		// LEFT
-		if (keyboard.keyDown(37)) {
+		// LEFT (1)
+		if (keyboard.keyDown(97)) {
 			currentAngle -= (ROTATION_SPEED * (actual_delta_time * 0.001));
 		}
-		// UP
-		if (keyboard.keyDown(38)) {
+		// UP (5)
+		if (keyboard.keyDown(101)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX += Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
-			velocityY += Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
-			// RIGHT
+			velocityX += Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityY += Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+
 		}
-		if (keyboard.keyDown(39)) {
+		// RIGHT (3)
+		if (keyboard.keyDown(99)) {
 			currentAngle += (ROTATION_SPEED * (actual_delta_time * 0.001));
 		}
-		// DOWN
-		if (keyboard.keyDown(40)) {
+		// DOWN (2)
+		if (keyboard.keyDown(98)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX -= Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
-			velocityY -= Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
-		}
-		if (keyboard.keyDown(16)) {
-			shoot(universe);
+			velocityX -= Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityY -= Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
 		}
 		if (currentAngle >= 360) {
 			currentAngle -= 360;
@@ -156,15 +157,15 @@ public class PurpleUfo implements DisplayableSprite {
 		currentAngle %= 360;
 		reloadTime -= actual_delta_time;
 
+		// SHOOT (0)
+		if (keyboard.keyDown(96)) {
+			shoot(universe);
+		}
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		double deltaY = actual_delta_time * 0.001 * velocityY;
 
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0, universe);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY, universe);
-		
-		if(!invincible) {
-			this.checkCollisionWithBullet(universe.getSprites(), universe);
-		}
 
 		if (!collidingBarrierY) {
 			this.centerY += deltaY;
@@ -198,25 +199,25 @@ public class PurpleUfo implements DisplayableSprite {
 			}
 		}
 		
-	
-	return colliding;	
-	}
-	
-	private void checkCollisionWithBullet(ArrayList<DisplayableSprite> sprites, Universe universe) {
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
-					((MainUniverse)universe).setKillTracker(2, 1);//sets state on killTracker as dead
-					this.dispose = true;		
+					
+					((MainUniverse)universe).setKillTracker(3, 1);//sets state on killTracker as dead
+					this.dispose = true;	
+					break;
 				}
 			}
 		}
+	return colliding;	
 	}
 
 	public void shoot(Universe universe) {
 
 		if (reloadTime <= 0) {
+			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
 			double bulletVelocity = 150; // + currentVelocity;
+			double ratio = (bulletVelocity / currentVelocity);
 
 			double angleInRadians = Math.toRadians(currentAngle);
 			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
@@ -225,7 +226,7 @@ public class PurpleUfo implements DisplayableSprite {
 			double bulletCurrentX = this.getCenterX();
 			double bulletCurrentY = this.getCenterY();
 
-			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/GreenLaser.png");
+			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/PurpleLaser.png");	
 			universe.getSprites().add(bullet);
 			reloadTime = 100;
 

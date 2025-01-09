@@ -3,7 +3,6 @@ import java.util.Random;
 
 public class MainUniverse implements Universe {
 	private boolean complete = false;
-	private boolean gameOver = false;
 	private Background background;
 	private ArrayList<Background> backgrounds;
 
@@ -131,5 +130,25 @@ public class MainUniverse implements Universe {
 	
 	public int[] getKillTracker() {
 		return this.killTracker;
+	}
+	
+	public void gameOver() {
+		if(this.killTracker[0] == 0) {
+			//red is winner
+			this.xCenter = redUfo.getCenterX();
+			this.yCenter = redUfo.getCenterY();
+		} else if(this.killTracker[1] == 0) {
+			//yellow is winner
+			this.xCenter = yellowUfo.getCenterX();
+			this.yCenter = yellowUfo.getCenterY();
+		} else if(this.killTracker[2] == 0) {
+			//green is winner
+			this.xCenter = greenUfo.getCenterX();
+			this.yCenter = greenUfo.getCenterY();
+		}else if(this.killTracker[3] == 0) {
+			//purple is winner
+			this.xCenter = purpleUfo.getCenterX();
+			this.yCenter = purpleUfo.getCenterY();
+		}
 	}
 }
