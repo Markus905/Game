@@ -10,6 +10,10 @@ public class MainUniverse implements Universe {
 	private DisplayableSprite purpleUfo;
 	private DisplayableSprite redUfo;
 	private DisplayableSprite yellowUfo;
+	
+	private double scale = 0.65;
+	
+	private AudioPlayer winAudio = new AudioPlayer();
 
 	private SpawnPointGenerator spawnPointGenerator;
 
@@ -31,7 +35,7 @@ public class MainUniverse implements Universe {
 		backgrounds.add(background);
 		ArrayList<DisplayableSprite> barriers = ((RandomlyGeneratedMap) background).getBarriers();
 
-		spawnPointGenerator = new SpawnPointGenerator(((RandomlyGeneratedMap) this.background).getMap(), 100);
+		spawnPointGenerator = new SpawnPointGenerator(((RandomlyGeneratedMap) this.background).getMap(), 100);//finds first open spot from randomly generated coordinates
 
 		int[] greenUfoSpawn = spawnPointGenerator.generateSpawnPoint(random.nextInt(13), random.nextInt(13));
 		greenUfo = new GreenUfo(greenUfoSpawn[0], greenUfoSpawn[1]);
@@ -42,7 +46,7 @@ public class MainUniverse implements Universe {
 		int[] redUfoSpawn = spawnPointGenerator.generateSpawnPoint(random.nextInt(13), random.nextInt(13));
 		redUfo = new RedUfo(redUfoSpawn[0], redUfoSpawn[1]);
 
-		int[] yellowUfoSpawn = spawnPointGenerator.generateSpawnPoint(random.nextInt(13), random.nextInt(13));
+		int[] yellowUfoSpawn = spawnPointGenerator.generateSpawnPoint(random.nextInt(13), random.nextInt(13)); 
 		yellowUfo = new YellowUfo(yellowUfoSpawn[0], yellowUfoSpawn[1]);
 
 		sprites.add(greenUfo);
@@ -54,7 +58,7 @@ public class MainUniverse implements Universe {
 	}
 
 	public double getScale() {
-		return .65;
+		return scale;
 	}
 
 	public double getXCenter() {
@@ -133,20 +137,27 @@ public class MainUniverse implements Universe {
 	}
 	
 	public void gameOver() {
+		this.scale = 0.30;
+		winAudio.playAsynchronous("res/audio/winSoundEffect.wav");
+
 		if(this.killTracker[0] == 0) {
 			//red is winner
+			((RedUfo)redUfo).setInvincible(true);
 			this.xCenter = redUfo.getCenterX();
 			this.yCenter = redUfo.getCenterY();
 		} else if(this.killTracker[1] == 0) {
 			//yellow is winner
+			((YellowUfo)yellowUfo).setInvincible(true);
 			this.xCenter = yellowUfo.getCenterX();
 			this.yCenter = yellowUfo.getCenterY();
 		} else if(this.killTracker[2] == 0) {
 			//green is winner
+			((GreenUfo)greenUfo).setInvincible(true);
 			this.xCenter = greenUfo.getCenterX();
 			this.yCenter = greenUfo.getCenterY();
 		}else if(this.killTracker[3] == 0) {
 			//purple is winner
+			((PurpleUfo)purpleUfo).setInvincible(true);
 			this.xCenter = purpleUfo.getCenterX();
 			this.yCenter = purpleUfo.getCenterY();
 		}

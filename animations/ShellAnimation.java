@@ -55,6 +55,7 @@ public class ShellAnimation implements Animation {
 			System.out.println("red:" + killTracker[0] + "yellow:" + killTracker[1] + "Green:" + killTracker[2] + "purp:" + killTracker[3]);
 			if(checkGameOver(killTracker) && !isTimerActive) {
 				  isTimerActive = true;// Mark timer as active
+				  ((MainUniverse)current).gameOver();
 				 
 				  if (killTracker[0] == 0) {
 					  this.winCount[0]++;
@@ -111,7 +112,7 @@ public class ShellAnimation implements Animation {
                 universeSwitched = true;
                 isTimerActive = false;  // Reset the timer status after switch
             }
-        }, 1000);  
+        }, 5000);  
     }
 	public Universe switchUniverse(Object event) {
 		animationComplete = true;

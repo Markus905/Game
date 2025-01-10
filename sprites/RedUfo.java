@@ -2,6 +2,7 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.imageio.ImageIO;
 
@@ -15,6 +16,8 @@ public class RedUfo implements DisplayableSprite {
 	private double reloadTime = 0;
 	private double velocityX = 0;
 	private double velocityY = 0;
+	
+	Random random = new Random();
 
 	private int currentFrame = 0;
 	private long elapsedTime = 0;
@@ -26,7 +29,10 @@ public class RedUfo implements DisplayableSprite {
 
 	private final int VELOCITY = 10000;
 	private double ROTATION_SPEED = 150; // degrees per second
-	private int currentAngle = 0;
+	private int currentAngle = random.nextInt(360);
+	
+	private AudioPlayer bulletSoundEffectPlayer = new AudioPlayer();
+	private AudioPlayer deathSoundEffectPlayer = new AudioPlayer();
 	
 	private boolean invincible = false;
 
@@ -211,6 +217,7 @@ public class RedUfo implements DisplayableSprite {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
 					((MainUniverse)universe).setKillTracker(0, 1);//sets state on killTracker as dead
+					deathSoundEffectPlayer.playAsynchronous("res/audio/8-bit-explosion_F.wav");
 					this.dispose = true;		
 				}
 			}
@@ -222,6 +229,12 @@ public class RedUfo implements DisplayableSprite {
 
 		if (reloadTime <= 0) {
 			double bulletVelocity = 150; // + currentVelocity;
+			
+			if(bulletSoundEffectPlayer.isPlayCompleted()) {
+				bulletSoundEffectPlayer.playAsynchronous("res/audio/8-bit-kit-lazer-5.wav");
+			}
+			
+			
 
 			double angleInRadians = Math.toRadians(currentAngle);
 			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
@@ -232,7 +245,7 @@ public class RedUfo implements DisplayableSprite {
 
 			bullet_sprite bullet = new bullet_sprite(bulletCurrentX, bulletCurrentY, bulletVelocityX, bulletVelocityY, "res/RedLaser.png");	
 			universe.getSprites().add(bullet);
-			reloadTime = 100;
+			reloadTime = 400;
 
 		}
 	}
