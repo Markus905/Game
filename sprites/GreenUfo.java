@@ -24,7 +24,7 @@ public class GreenUfo implements DisplayableSprite {
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 
-	private double VELOCITY = 10000;
+	private final int VELOCITY = 10000;
 	private double ROTATION_SPEED = 150; // degrees per second
 	private int currentAngle = 0;
 	
@@ -230,6 +230,10 @@ public class GreenUfo implements DisplayableSprite {
 			reloadTime = 100;
 
 		}
+	}
+	
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
 	}
 
 }

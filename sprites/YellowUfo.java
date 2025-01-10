@@ -7,14 +7,11 @@ import javax.imageio.ImageIO;
 
 public class YellowUfo implements DisplayableSprite {
 
-	private static Image[] rotatedImages = new Image[360];
-	private static Image image;
 	private double centerX = 0;
 	private double centerY = 0;
 	private double width = 64;
 	private double height = 64;
 	private boolean dispose = false;
-	private Image rotatedImage;
 	private double reloadTime = 0;
 	private double velocityX = 0;
 	private double velocityY = 0;
@@ -27,12 +24,12 @@ public class YellowUfo implements DisplayableSprite {
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 
-	private double ACCELERATION = 10000;
-	private final double VELOCITY = 40000;
+	private final int VELOCITY = 10000;
 	private double ROTATION_SPEED = 150; // degrees per second
 	private int currentAngle = 0;
-	private int currentImageAngle = 0;
-
+	
+	private boolean invincible = false;
+	
 	public YellowUfo(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
 
@@ -47,7 +44,6 @@ public class YellowUfo implements DisplayableSprite {
 
 		this.framesPerSecond = framesPerSecond;
 		this.milliSecondsPerFrame = 1000 / framesPerSecond;
-		long startTime = System.currentTimeMillis();
 
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
@@ -133,8 +129,8 @@ public class YellowUfo implements DisplayableSprite {
 		// UP (w)
 		if (keyboard.keyDown(87)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX += Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
-			velocityY += Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityX += Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+			velocityY += Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
 			
 		} // right (d)
 		if (keyboard.keyDown(68)) {
@@ -143,8 +139,8 @@ public class YellowUfo implements DisplayableSprite {
 		// DOWN (s)
 		if (keyboard.keyDown(83)) {
 			double angleInRadians = Math.toRadians(currentAngle);
-			velocityX -= Math.cos(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
-			velocityY -= Math.sin(angleInRadians) * ACCELERATION * actual_delta_time * 0.001;
+			velocityX -= Math.cos(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
+			velocityY -= Math.sin(angleInRadians) * VELOCITY * actual_delta_time * 0.001;
 		} // (tab)
 		if (keyboard.keyDown(20)) {
 			shoot(universe);
@@ -164,6 +160,10 @@ public class YellowUfo implements DisplayableSprite {
 
 		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0, universe);
 		boolean collidingBarrierY = checkCollisionWithBarrier(universe.getSprites(), 0, deltaY, universe);
+		
+		if(!invincible) {
+			this.checkCollisionWithBullet(universe.getSprites(), universe);
+		}
 
 		if (!collidingBarrierY) {
 			this.centerY += deltaY;
@@ -197,6 +197,10 @@ public class YellowUfo implements DisplayableSprite {
 			}
 		}
 		
+	return colliding;	
+	}
+	
+	private void checkCollisionWithBullet(ArrayList<DisplayableSprite> sprites, Universe universe) {
 		for (DisplayableSprite sprite : sprites) {
 			if (sprite instanceof bullet_sprite && (((bullet_sprite) sprite).getLifetime() < 7600)) {
 				if (CollisionDetection.overlaps(this.getMinX(), this.getMinY(), this.getMaxX(), this.getMaxY(), sprite.getMinX(),sprite.getMinY(), sprite.getMaxX(), sprite.getMaxY())) {
@@ -205,15 +209,12 @@ public class YellowUfo implements DisplayableSprite {
 				}
 			}
 		}
-	return colliding;	
 	}
 	
 	public void shoot(Universe universe) {
 
 		if (reloadTime <= 0) {
-			double currentVelocity = Math.sqrt((velocityX * velocityX) + (velocityY * velocityY));
 			double bulletVelocity = 150; // + currentVelocity;
-			double ratio = (bulletVelocity / currentVelocity);
 
 			double angleInRadians = Math.toRadians(currentAngle);
 			double bulletVelocityX = Math.cos(angleInRadians) * bulletVelocity + velocityX;
@@ -227,6 +228,10 @@ public class YellowUfo implements DisplayableSprite {
 			reloadTime = 100;
 
 		}
+	}
+	
+	public void setInvincible(boolean invincible) {
+		this.invincible = invincible;
 	}
 
 }

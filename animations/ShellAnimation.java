@@ -46,10 +46,13 @@ public class ShellAnimation implements Animation {
 		this.animationComplete = true;		
 	}
 	@Override
-	public void update(AnimationFrame frame, long actual_delta_time) {		
+	public void update(AnimationFrame frame, long actual_delta_time) {	
+		
+		
 		
 		if(universeCount == 1) {
 			int[] killTracker = ((MainUniverse)current).getKillTracker();
+			System.out.println("red:" + killTracker[0] + "yellow:" + killTracker[1] + "Green:" + killTracker[2] + "purp:" + killTracker[3]);
 			if(checkGameOver(killTracker) && !isTimerActive) {
 				  isTimerActive = true;// Mark timer as active
 				 
