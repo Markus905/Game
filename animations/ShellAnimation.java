@@ -52,7 +52,6 @@ public class ShellAnimation implements Animation {
 		
 		if(universeCount == 1) {
 			int[] killTracker = ((MainUniverse)current).getKillTracker();
-			System.out.println("red:" + killTracker[0] + "yellow:" + killTracker[1] + "Green:" + killTracker[2] + "purp:" + killTracker[3]);
 			if(checkGameOver(killTracker) && !isTimerActive) {
 				  isTimerActive = true;// Mark timer as active
 				  ((MainUniverse)current).gameOver();
