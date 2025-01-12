@@ -2,7 +2,7 @@
 import java.util.ArrayList;
 
 
-public class tankmaplayout implements Universe {
+public class TitleScreen implements Universe {
 	
 	
 	
@@ -19,7 +19,7 @@ public class tankmaplayout implements Universe {
 
 	
 
-	public tankmaplayout() {
+	public TitleScreen() {
 		
 		title = new ImageSprite(0, 500, 2000, 2000, "res/Title.jpg");
 	

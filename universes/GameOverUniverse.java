@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class EmptyUniverse implements Universe {
+public class GameOverUniverse implements Universe {
 
 	private boolean complete = false;
 	private boolean gameOver = false;
@@ -15,7 +15,7 @@ public class EmptyUniverse implements Universe {
 	private double xCenter;
 	private double yCenter;
 
-	public EmptyUniverse() {
+	public GameOverUniverse() {
 		 ImageSprite title = new ImageSprite(740, 550, 1300, 1300, "res/gameover.jpg");
 		backgrounds = new ArrayList<Background>();
 		backgrounds.add(new GameBackground());

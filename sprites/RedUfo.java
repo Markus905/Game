@@ -28,7 +28,7 @@ public class RedUfo implements DisplayableSprite {
 	private static boolean framesLoaded = false;
 
 	private final int VELOCITY = 10000;
-	private double ROTATION_SPEED = 150; // degrees per second
+	private double ROTATION_SPEED = 250; // degrees per second
 	private int currentAngle = random.nextInt(360);
 	
 	private AudioPlayer bulletSoundEffectPlayer = new AudioPlayer();

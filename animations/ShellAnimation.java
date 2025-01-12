@@ -2,7 +2,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class ShellAnimation implements Animation {
-	private Universe current = new tankmaplayout();
+	private Universe current = new TitleScreen();
 	private boolean universeSwitched = false;
 	private boolean animationComplete = false;
 	private int universeCount = 0;
@@ -16,11 +16,11 @@ public class ShellAnimation implements Animation {
 
 	public Universe getCurrentUniverse() {
 		if(universeCount == 0) {
-			this.current = new tankmaplayout();
+			this.current = new TitleScreen();
 		} else if(universeCount == 1){
 			this.current = new MainUniverse();
 		} else {
-			this.current = new EmptyUniverse();
+			this.current = new GameOverUniverse();
 		}
 		
 		return current;
